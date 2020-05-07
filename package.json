@@ -1,0 +1,40 @@
+{
+  "name": "ac-remote-telemetry-client",
+  "version": "0.1.0",
+  "description": "A Node UDP client and telemetry parser for Assetto Corsa",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rickwest/ac-remote-telemetry-client.git"
+  },
+  "keywords": [
+    "assetto corsa",
+    "ac",
+    "acc",
+    "automotive",
+    "kunos simulazioni",
+    "udp",
+    "telemetry",
+    "racing",
+    "simracing",
+    "gaming",
+    "xbox",
+    "xbox one",
+    "ps4",
+    "playstation",
+    "playstation 4",
+    "esports",
+    "e sports",
+    "e-sports",
+    "videogame"
+  ],
+  "author": "Rick West",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rickwest/ac-remote-telemetry-client/issues"
+  },
+  "homepage": "https://github.com/rickwest/ac-remote-telemetry-client#readme"
+}
