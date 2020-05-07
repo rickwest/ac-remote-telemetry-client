@@ -36,7 +36,7 @@ client.on("message", (message) => {
 });
 
 function readString(buf, start, length) {
-    const str = buf.toString('binary', start, start + length);
+    const str = buf.toString('utf16le', start, start + length);
     const parts = str.split('%');
     return parts[0];
 }
@@ -82,7 +82,7 @@ function getRTCarInfo(message) {
     // rtCarInfo.clutch;
     rtCarInfo.engineRPM = message.readFloatLE(68);
     // rtCarInfo.steer;
-    rtCarInfo.gear = message.readInt32LE(68);
+    rtCarInfo.gear = message.readInt32LE(76); //  0: Revers, 1: Neutral, 2: First Gear etc...
     // rtCarInfo.cgHeight;
 
     // rtCarInfo.wheelAngularSpeed[4];
@@ -109,37 +109,18 @@ function getRTCarInfo(message) {
     // rtCarInfo.carCoordinates[3];
 
     return rtCarInfo;
-
-
-    // RPM = BitConverter.ToSingle(UDPBytes.Skip(68).Take(4).ToArray, 0)
-    // Gear = BitConverter.ToInt32(UDPBytes.Skip(76).Take(4).ToArray, 0) - 1
-    // LapTime = BitConverter.ToUInt32(UDPBytes.Skip(40).Take(4).ToArray, 0)
-    // LastLap = BitConverter.ToUInt32(UDPBytes.Skip(44).Take(4).ToArray, 0)
-    // BestLap = BitConverter.ToUInt32(UDPBytes.Skip(48).Take(4).ToArray, 0)
-    // LapCount = BitConverter.ToUInt32(UDPBytes.Skip(52).Take(4).ToArray, 0)
-    // GForceVert = BitConverter.ToSingle(UDPBytes.Skip(28).Take(4).ToArray, 0)
-    // GForceLon = BitConverter.ToSingle(UDPBytes.Skip(36).Take(4).ToArray, 0)
-    // GForceLat = BitConverter.ToSingle(UDPBytes.Skip(32).Take(4).ToArray, 0)
-    // Gas = BitConverter.ToSingle(UDPBytes.Skip(56).Take(4).ToArray, 0)
-    // Brake = BitConverter.ToSingle(UDPBytes.Skip(60).Take(4).ToArray, 0)
-    // Clutch = BitConverter.ToSingle(UDPBytes.Skip(64).Take(4).ToArray, 0)
-    // Steer = BitConverter.ToSingle(UDPBytes.Skip(72).Take(4).ToArray, 0)
-    // PositionNormalized = BitConverter.ToSingle(UDPBytes.Skip(308).Take(4).ToArray, 0)
-    // CarPosition(0) = BitConverter.ToSingle(UDPBytes.Skip(316).Take(4).ToArray, 0)
-    // CarPosition(1) = BitConverter.ToSingle(UDPBytes.Skip(320).Take(4).ToArray, 0)
-    // CarPosition(2) = BitConverter.ToSingle(UDPBytes.Skip(324).Take(4).ToArray, 0)
-    // CarSLope = BitConverter.ToSingle(UDPBytes.Skip(312).Take(4).ToArray, 0)
 }
 
 function getHandshakerResponse(message) {
     const handshakerResponse = {};
 
+    // 1 utf-16 character is 2 bytes so string length of 50 characters requires reading 100 bytes.
     handshakerResponse.carName = readString(message, 0, 100);
     handshakerResponse.driverName = readString(message, 100, 100);
-    // handshakerResponse.identifier = readString();
-    // handshakerResponse.version = readString();
-    // handshakerResponse.trackName = readString();
-    // handshakerResponse.trackConfig = readString();
+    handshakerResponse.identifier = message.readInt32LE(200); // 4 bytes
+    handshakerResponse.version = message.readInt32LE(204); // 4 bytes
+    handshakerResponse.trackName = readString(message, 208,100);
+    handshakerResponse.trackConfig = readString(message,308, 100);
     return handshakerResponse;
 }
 
