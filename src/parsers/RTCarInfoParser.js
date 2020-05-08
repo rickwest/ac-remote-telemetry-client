@@ -16,7 +16,7 @@ class RTCarInfoParser extends ACRemoteTelemetryParser {
             .int8('isAbsInAction') // Offset: 21
             .int8('isTcInAction') // Offset: 22
             .int8('isTcEnabled') // Offset: 23
-            .int8('isInPit;') // Offset: 24
+            .int8('isInPit') // Offset: 24
             .int8('isEngineLimiterOn') // Offset: 25
             .skip(2) // Unknown 2 bytes
 
