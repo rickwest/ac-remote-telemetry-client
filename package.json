@@ -8,8 +8,11 @@
       "es2015"
     ]
   },
+  "files": [
+    "/lib"
+  ],
   "scripts": {
-    "build": "babel src --presets babel-preset-es2015 --out-dir lib",
+    "build": "babel src --out-dir lib",
     "prepublishOnly": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -47,5 +50,8 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-es2015": "^6.24.1"
+  },
+  "dependencies": {
+    "binary-parser": "^1.6.2"
   }
 }

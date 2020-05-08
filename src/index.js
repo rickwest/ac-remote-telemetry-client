@@ -2,7 +2,9 @@
 
 import * as dgram from 'dgram';
 import {EventEmitter} from 'events';
-import {HandshakerResponseParser, RTCarInfoParser, RTLapParser} from "./parsers";
+import HandshakerResponseParser from "./parsers/HandshakerResponseParser";
+import RTCarInfoParser from "./parsers/RTCarInfoParser";
+import RTLapParser from "./parsers/RTLapParser";
 
 /**
  * The connection port number of the Assetto Corsa server (ACServer)
@@ -58,13 +60,6 @@ const event = {
     RT_CAR_INFO: 'RT_CAR_INFO',
     RT_LAP: 'RT_LAP',
 };
-
-/**
- * [not used in the current Remote Telemetry version by AC] In future version this field will identify the AC Remote Telemetry version that the device expects to speak with.
- *
- * @type {number}
- */
-const version = 1;
 
 class ACRemoteTelemetryClient extends EventEmitter {
     /**
@@ -161,13 +156,13 @@ class ACRemoteTelemetryClient extends EventEmitter {
     parseMessage(msg, rinfo) {
         switch(rinfo.size) {
             case 408:
-                this.emit(event.HANDSHAKER_RESPONSE, new HandshakerResponseParser(msg).data);
+                this.emit(event.HANDSHAKER_RESPONSE, new HandshakerResponseParser().fromBuffer(msg));
                 break;
             case 328:
-                this.emit(event.RT_CAR_INFO, new RTCarInfoParser(msg).data);
+                this.emit(event.RT_CAR_INFO, new RTCarInfoParser().fromBuffer(msg));
                 break;
             case 212:
-                this.emit(event.RT_LAP, new RTLapParser(msg).data);
+                this.emit(event.RT_LAP, new RTLapParser(msg).fromBuffer(msg));
                 break;
         }
     }
