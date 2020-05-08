@@ -24,7 +24,7 @@ const AC_SERVER_VERSION = 1;
  *
  * @type {{eAndroidTablet: number, eIPhoneDevice: number, eIPadDevice: number, eAndroidPhone: number}}
  */
-const identifier = {
+const deviceIdentifier = {
     eIPhoneDevice: 0,
     eIPadDevice: 1,
     eAndroidPhone: 2,
@@ -115,7 +115,7 @@ class ACRemoteTelemetryClient extends EventEmitter {
      * @param identifier
      * @param version
      */
-    sendHandshaker(operation, identifier = identifier.eIPhoneDevice, version = AC_SERVER_VERSION) {
+    sendHandshaker(operation, identifier = deviceIdentifier.eIPhoneDevice, version = AC_SERVER_VERSION) {
         const message = new Buffer(12);
 
         message.writeInt32LE(identifier, 0);
@@ -173,4 +173,4 @@ class ACRemoteTelemetryClient extends EventEmitter {
     }
 }
 
-export {ACRemoteTelemetryClient};
+module.exports = ACRemoteTelemetryClient;

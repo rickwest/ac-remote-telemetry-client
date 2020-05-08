@@ -1,5 +1,7 @@
 class ACRemoteTelemetryParser {
-    data = {};
+    constructor() {
+        this.data = {};
+    }
 
     /**
      * @param buffer
