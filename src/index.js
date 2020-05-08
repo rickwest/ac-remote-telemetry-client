@@ -163,7 +163,7 @@ class ACRemoteTelemetryClient extends EventEmitter {
             case 408:
                 this.emit(event.HANDSHAKER_RESPONSE, new HandshakerResponseParser(msg).data);
                 break;
-            case 238:
+            case 328:
                 this.emit(event.RT_CAR_INFO, new RTCarInfoParser(msg).data);
                 break;
             case 212:
