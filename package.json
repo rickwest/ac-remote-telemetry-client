@@ -55,6 +55,6 @@
     "eslint-plugin-import": "^2.20.2"
   },
   "dependencies": {
-    "binary-parser": "^1.6.2"
+    "binary-parser": "^2.3.0"
   }
 }
